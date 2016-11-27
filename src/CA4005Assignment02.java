@@ -1,4 +1,3 @@
-import javax.imageio.IIOException;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
@@ -12,15 +11,12 @@ import java.util.List;
 
 import static java.util.Collections.singletonList;
 
-/**
- * Created by jacob on 26/11/16.
- */
+
 public class CA4005Assignment02 {
 
+    // left to right variant of the square and multiply algorithm
     private static BigInteger modExp(BigInteger a, BigInteger exp, BigInteger mod) {
-
         int n = exp.bitLength();
-
         BigInteger y = BigInteger.ONE;
         for (int i = n-1; i >= 0; i--) {
             y = y.multiply(y).mod(mod);
@@ -50,7 +46,7 @@ public class CA4005Assignment02 {
         BigInteger cp = modExp(c, d.mod(p.subtract(BigInteger.ONE)), p);
         BigInteger cq = modExp(c, d.mod(q.subtract(BigInteger.ONE)), q);
 
-        // calculate the multiplicative inverse of q mod (cp-cq
+        // calculate the multiplicative inverse of q (mod p)
         BigInteger qInv = multInv(q, p);
 
         // use Chinese remainder theorem
@@ -65,7 +61,7 @@ public class CA4005Assignment02 {
     }
 
     public static void main(String[] args) {
-        final BigInteger e = new BigInteger("65537"); // encryption exponent
+        BigInteger e = new BigInteger("65537"); // encryption exponent
 
         BigInteger p;
         BigInteger q;
@@ -90,14 +86,14 @@ public class CA4005Assignment02 {
             xEuclid = xgcd(e, phiN);
         } while (!(xEuclid[2].equals(BigInteger.ONE)));
 
-        final BigInteger d = xEuclid[0];
+        BigInteger d = xEuclid[0]; // decryption exponent
 
         try {
-            // get digest of input file as a BigInteger
+            // get digest of input file as a positive BigInteger
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-            BigInteger c = new BigInteger(md.digest(Files.readAllBytes(Paths.get(args[0]))));
+            BigInteger c = new BigInteger(1, md.digest(Files.readAllBytes(Paths.get(args[0]))));
 
-            // use Chinese remainder theorem
+            // sign the digest using my private key
             BigInteger signedDigest = decrypt(c, d, p, q);
 
             // write out N and digitally signed code digest to files in hex format
@@ -106,7 +102,8 @@ public class CA4005Assignment02 {
 
         } catch ( IOException
                 | NoSuchAlgorithmException err) {
-            System.out.println(err);
+
+            err.printStackTrace();
         }
     }
 }
