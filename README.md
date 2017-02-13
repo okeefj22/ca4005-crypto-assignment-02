@@ -1,7 +1,7 @@
 # CA4005 Assignment 2: Digital Signature Using RSA
 http://www.computing.dcu.ie/%7Ehamilton/teaching/CA4005/Assignments/Assignment2.html
 
-**10am Monday 5th December**
+**Mark received: 15/15**
 
 ## Spec
 
