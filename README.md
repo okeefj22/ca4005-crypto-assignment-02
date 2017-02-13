@@ -3,19 +3,6 @@ http://www.computing.dcu.ie/%7Ehamilton/teaching/CA4005/Assignments/Assignment2.
 
 **10am Monday 5th December**
 
-## Comments
-Common mistakes made were as follows:
-
-1. Code digest not calculated correctly (or in some cases not implemented at all).
-
-2. Chinese Remainder Theorem not implemented correctly (or in some cases not implemented at all).
-
-3. Code digest not correctly converted into BigInteger (directly converting  from array of bytes can result in a negative digest since two's complement representation is assumed).
-
-4. Using a byte array for the code file which is too large (this will be filled up with additional zeroes and give an incorrect digest value).
-
-5. Calculating decryption exponent mod n rather than mod phi(n).
-
 ## Spec
 
 The aim of this assignment is to implement a digital signature using RSA. Before the digital signature can be implemented, you will need to set up an appropriate public/private RSA key pair. This should be done as follows:
